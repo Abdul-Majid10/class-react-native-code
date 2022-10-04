@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, Text, FlatList, View, Image, TouchableOpacity } from "react-native";
 
 export default function CampusFinder() {
-    const [recordCounter, setrecordCounter] = useState(4); // change later
+    const [recordCounter, setrecordCounter] = useState(0);
 
     const availableFillters = [
         {
@@ -87,6 +87,11 @@ export default function CampusFinder() {
             imgPath: require("./images/fb.png"),
         },
     ];
+
+    useEffect(() => {
+        setrecordCounter(universites.length);
+    }, [universites]);
+
     return (
         <View style={styles.container}>
             <View style={styles.recordsCounterView}>
