@@ -90,28 +90,6 @@ export default function CampusFinder(props) {
         },
     ];
 
-    // const flatArray = [
-    //     { title: "pak vs eng", key: 0, detail: "finish", result: "pak WIN" },
-    //     { title: "pak vs eng", key: 1, detail: "Continue", result: "TBD" },
-    //     { title: "ind vs eng", key: 1, detail: "Continue", result: "TBD" },
-    //     { title: "ind vs eng", key: 1, detail: "not played yet", result: "TBD" },
-    // ];
-
-    // let sectionArray = [];
-    // let temp = [];
-
-    // function convertor(flatArray) {
-    //     for (let i = 0; i < flatArray.length; i++) {
-    //         if (temp.find(flatArray[i].title)) {
-    //             for (let j = 0; j < array.length; j++) {
-    //                 index = temp.indexOf(flatArray[i].title);
-    //             }
-    //         }
-
-    //         for (let j = 0; j < array.length; j++) {}
-    //     }
-    // }
-
     useEffect(() => {
         setrecordCounter(universites.length);
     }, [universites]);
