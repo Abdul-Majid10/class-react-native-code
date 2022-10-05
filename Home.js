@@ -1,7 +1,17 @@
 import React from "react";
+
+import { useEffect } from "react";
+
 import { View, StyleSheet, Text, Button } from "react-native";
 
 export default function Home(props) {
+    useEffect(() => {
+        global.setting = {
+            themeColor: "#E74C3C",
+            mode: "Default",
+        };
+    });
+
     return (
         <View style={styles.container}>
             <View style={styles.top}>
@@ -14,9 +24,9 @@ export default function Home(props) {
                 />
                 <Button
                     title="Go to Campus Finder Screen"
-                    onPress={() =>
-                        props.navigation.navigate("CampusFinder", { name: "Abdul Majid" })
-                    }
+                    onPress={() => {
+                        props.navigation.navigate("CampusFinder", { name: "Abdul Majid" });
+                    }}
                 />
             </View>
         </View>

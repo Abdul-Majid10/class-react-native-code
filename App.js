@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./Home";
 import CampusFinder from "./CampusFinder";
+import SettingScreen from "./SettingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,10 @@ function App(props) {
                     name="CampusFinder"
                     component={CampusFinder}
                     options={{ title: "Campus Finder" }}></Stack.Screen>
+                <Stack.Screen
+                    name="SettingScreen"
+                    component={SettingScreen}
+                    options={{ title: "Setting Screen" }}></Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
     );

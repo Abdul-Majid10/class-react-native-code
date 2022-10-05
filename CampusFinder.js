@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { StyleSheet, Text, FlatList, View, Image, TouchableOpacity } from "react-native";
 
-export default function CampusFinder() {
+export default function CampusFinder(props) {
     const [recordCounter, setrecordCounter] = useState(0);
+
+    const [setting, setSetting] = useState(global.setting);
 
     const availableFillters = [
         {
@@ -88,14 +90,52 @@ export default function CampusFinder() {
         },
     ];
 
+    // const flatArray = [
+    //     { title: "pak vs eng", key: 0, detail: "finish", result: "pak WIN" },
+    //     { title: "pak vs eng", key: 1, detail: "Continue", result: "TBD" },
+    //     { title: "ind vs eng", key: 1, detail: "Continue", result: "TBD" },
+    //     { title: "ind vs eng", key: 1, detail: "not played yet", result: "TBD" },
+    // ];
+
+    // let sectionArray = [];
+    // let temp = [];
+
+    // function convertor(flatArray) {
+    //     for (let i = 0; i < flatArray.length; i++) {
+    //         if (temp.find(flatArray[i].title)) {
+    //             for (let j = 0; j < array.length; j++) {
+    //                 index = temp.indexOf(flatArray[i].title);
+    //             }
+    //         }
+
+    //         for (let j = 0; j < array.length; j++) {}
+    //     }
+    // }
+
     useEffect(() => {
         setrecordCounter(universites.length);
     }, [universites]);
+
+    useEffect(() => {
+        const unsubscribe = props.navigation.addListener("focus", () => {
+            console.log("1 navigation useEffect is =", global.setting.themeColor);
+
+            setSetting(global.setting);
+        });
+        return unsubscribe;
+    }, [props.navigation]);
 
     return (
         <View style={styles.container}>
             <View style={styles.recordsCounterView}>
                 <Text style={styles.recordsCounterMessage}>Total Institutes : {recordCounter}</Text>
+                <TouchableOpacity
+                    style={styles.button(setting)}
+                    onPress={() => {
+                        props.navigation.navigate("SettingScreen");
+                    }}>
+                    <Text style={styles.buttonText}>Setting</Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.availableFillterView}>
                 <FlatList
@@ -115,7 +155,7 @@ export default function CampusFinder() {
                     horizontal={true}
                     renderItem={({ item }) => (
                         <View style={styles.filtersItems}>
-                            <Text style={styles.appliedFillters}>
+                            <Text style={styles.appliedFillters(setting)}>
                                 {item.title}: {item.value}
                             </Text>
                         </View>
@@ -127,18 +167,23 @@ export default function CampusFinder() {
                 <FlatList
                     data={universites}
                     renderItem={({ item }) => (
-                        <View style={styles.universitiesData}>
-                            <View style={styles.Imges}>
-                                <Image style={styles.image} source={item.imgPath} />
+                        <>
+                            <View style={styles.universitiesData}>
+                                <View style={styles.Imges}>
+                                    <Image style={styles.image} source={item.imgPath} />
+                                </View>
+                                <View style={styles.universityDetails}>
+                                    <Text style={styles.details}>{item.name}</Text>
+                                    <Text style={styles.details}>Fee: {item.fee}</Text>
+                                    <Text style={styles.details}>Admission : {item.admission}</Text>
+                                    <Text style={styles.details}>Location : {item.location}</Text>
+                                    <Text style={styles.details}>Rank : {item.rank}</Text>
+                                </View>
                             </View>
-                            <View style={styles.universityDetails}>
-                                <Text style={styles.details}>{item.name}</Text>
-                                <Text style={styles.details}>Fee: {item.fee}</Text>
-                                <Text style={styles.details}>Admission : {item.admission}</Text>
-                                <Text style={styles.details}>Location : {item.location}</Text>
-                                <Text style={styles.details}>Rank : {item.rank}</Text>
+                            <View style={styles.center}>
+                                <View style={styles.separator(setting)}></View>
                             </View>
-                        </View>
+                        </>
                     )}
                     keyExtractor={(item) => item.key}
                 />
@@ -154,6 +199,7 @@ const styles = StyleSheet.create({
     },
     recordsCounterView: {
         flex: 0.07,
+        flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
     },
@@ -161,8 +207,8 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: "Grey",
         backgroundColor: "#F8F9F9",
-        paddingLeft: 110,
-        paddingRight: 110,
+        paddingLeft: 70,
+        paddingRight: 70,
         paddingTop: 5,
         paddingBottom: 5,
 
@@ -209,18 +255,18 @@ const styles = StyleSheet.create({
         backgroundColor: "#F0F3F4",
         borderRadius: 10,
     },
-    appliedFillters: {
+    appliedFillters: (settting) => ({
         fontSize: 18,
         fontWeight: "bold",
         borderRadius: 10,
         color: "white",
-        backgroundColor: "#E74C3C",
+        backgroundColor: settting.themeColor,
         paddingLeft: 12,
         paddingRight: 12,
         margin: 10,
         paddingTop: 8,
         paddingBottom: 8,
-    },
+    }),
     records: {
         flex: 0.7,
     },
@@ -228,6 +274,15 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
     },
+    center: {
+        alignItems: "center",
+    },
+    separator: (setting) => ({
+        borderBottomColor: setting.themeColor,
+        borderBottomWidth: 2,
+        width: 200,
+    }),
+
     Imges: {
         flex: 0.4,
         padding: 20,
@@ -240,5 +295,17 @@ const styles = StyleSheet.create({
         borderRadius: 70,
         height: 130,
         width: 130,
+    },
+    button: (setting) => ({
+        backgroundColor: setting.themeColor,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 12,
+        paddingTop: 12,
+        borderRadius: 5,
+    }),
+    buttonText: {
+        color: "white",
+        fontWeight: "bold",
     },
 });
