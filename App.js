@@ -1,20 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import SignUp from "./Screens/SignUp";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "./Home";
+import CampusFinder from "./Screens/CampusFinder";
+import SettingScreen from "./Screens/SettingScreen";
+import Chats from "./Screens/Chats";
+import SMSChat from "./Screens/SMSChat";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const Stack = createNativeStackNavigator();
+
+function App(props) {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen name="Home" component={Home}></Stack.Screen>
+                <Stack.Screen name="SignUp" component={SignUp}></Stack.Screen>
+                <Stack.Screen
+                    name="CampusFinder"
+                    component={CampusFinder}
+                    options={{ title: "Campus Finder" }}></Stack.Screen>
+                <Stack.Screen
+                    name="SettingScreen"
+                    component={SettingScreen}
+                    options={{ title: "Setting Screen" }}></Stack.Screen>
+                <Stack.Screen
+                    name="Chats"
+                    component={Chats}
+                    options={{ title: "Chats" }}></Stack.Screen>
+                <Stack.Screen
+                    name="SMSChat"
+                    component={SMSChat}
+                    options={{ title: "SMS Chat" }}></Stack.Screen>
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
