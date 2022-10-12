@@ -96,7 +96,7 @@ function SMSChat(props) {
     };
 
     const sendMessage = (text) => {
-        if (text) {
+        if (text.trim()) {
             let newMessage = {
                 key: chat.length,
                 message: text,
@@ -106,6 +106,8 @@ function SMSChat(props) {
             let newChat = [...chat, newMessage];
             setChat(newChat);
             setTextMessage("");
+        } else {
+            alert("Empty message Can't be send ");
         }
     };
 
