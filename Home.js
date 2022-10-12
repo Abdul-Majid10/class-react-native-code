@@ -28,6 +28,12 @@ export default function Home(props) {
                         props.navigation.navigate("CampusFinder", { name: "Abdul Majid" });
                     }}
                 />
+                <Button
+                    title="Go to Chat Screens"
+                    onPress={() => {
+                        props.navigation.navigate("Chats", { name: "Abdul Majid" });
+                    }}
+                />
             </View>
         </View>
     );

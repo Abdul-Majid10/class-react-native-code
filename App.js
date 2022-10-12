@@ -1,10 +1,12 @@
 import React from "react";
-import SignUp from "./SignUp";
+import SignUp from "./Screens/SignUp";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./Home";
-import CampusFinder from "./CampusFinder";
-import SettingScreen from "./SettingScreen";
+import CampusFinder from "./Screens/CampusFinder";
+import SettingScreen from "./Screens/SettingScreen";
+import Chats from "./Screens/Chats";
+import SMSChat from "./Screens/SMSChat";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +24,14 @@ function App(props) {
                     name="SettingScreen"
                     component={SettingScreen}
                     options={{ title: "Setting Screen" }}></Stack.Screen>
+                <Stack.Screen
+                    name="Chats"
+                    component={Chats}
+                    options={{ title: "Chats" }}></Stack.Screen>
+                <Stack.Screen
+                    name="SMSChat"
+                    component={SMSChat}
+                    options={{ title: "SMS Chat" }}></Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -56,7 +56,7 @@ export default function CampusFinder(props) {
             location: "Lahore",
             rank: "Middel",
             disp: "CS",
-            imgPath: require("./images/fb.png"),
+            imgPath: require("../images/fb.png"),
         },
         {
             key: 1,
@@ -66,7 +66,7 @@ export default function CampusFinder(props) {
             location: "Lahore",
             rank: "Top",
             disp: "CS",
-            imgPath: require("./images/google.jpeg"),
+            imgPath: require("../images/google.jpeg"),
         },
         {
             key: 2,
@@ -76,7 +76,7 @@ export default function CampusFinder(props) {
             location: "ISB",
             rank: "Top",
             disp: "Machiniacl",
-            imgPath: require("./images/linkedin.jpeg"),
+            imgPath: require("../images/linkedin.jpeg"),
         },
         {
             key: 3,
@@ -86,31 +86,9 @@ export default function CampusFinder(props) {
             location: "Karachi",
             rank: "Lower",
             disp: "IT",
-            imgPath: require("./images/fb.png"),
+            imgPath: require("../images/fb.png"),
         },
     ];
-
-    // const flatArray = [
-    //     { title: "pak vs eng", key: 0, detail: "finish", result: "pak WIN" },
-    //     { title: "pak vs eng", key: 1, detail: "Continue", result: "TBD" },
-    //     { title: "ind vs eng", key: 1, detail: "Continue", result: "TBD" },
-    //     { title: "ind vs eng", key: 1, detail: "not played yet", result: "TBD" },
-    // ];
-
-    // let sectionArray = [];
-    // let temp = [];
-
-    // function convertor(flatArray) {
-    //     for (let i = 0; i < flatArray.length; i++) {
-    //         if (temp.find(flatArray[i].title)) {
-    //             for (let j = 0; j < array.length; j++) {
-    //                 index = temp.indexOf(flatArray[i].title);
-    //             }
-    //         }
-
-    //         for (let j = 0; j < array.length; j++) {}
-    //     }
-    // }
 
     useEffect(() => {
         setrecordCounter(universites.length);
@@ -118,8 +96,6 @@ export default function CampusFinder(props) {
 
     useEffect(() => {
         const unsubscribe = props.navigation.addListener("focus", () => {
-            console.log("1 navigation useEffect is =", global.setting.themeColor);
-
             setSetting(global.setting);
         });
         return unsubscribe;

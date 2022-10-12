@@ -51,9 +51,9 @@ export default function SignUp() {
             <View style={styles.buttom}>
                 <Text style={styles.h3}>Sign up with social Account</Text>
                 <View style={styles.buttomSocial}>
-                    <Image style={styles.image} source={require("./images/fb.png")} />
-                    <Image style={styles.image} source={require("./images/google.jpeg")} />
-                    <Image style={styles.image} source={require("./images/linkedin.jpeg")} />
+                    <Image style={styles.image} source={require("../images/fb.png")} />
+                    <Image style={styles.image} source={require("../images/google.jpeg")} />
+                    <Image style={styles.image} source={require("../images/linkedin.jpeg")} />
                 </View>
                 <View style={styles.buttom}>
                     <TouchableOpacity style={styles.button} onPress={() => {}}>
