@@ -96,15 +96,17 @@ function SMSChat(props) {
     };
 
     const sendMessage = (text) => {
-        let newMessage = {
-            key: chat.length,
-            message: text,
-            tag: "send",
-            time: "12:10", //dummy
-        };
-        let newChat = [...chat, newMessage];
-        setChat(newChat);
-        setTextMessage("");
+        if (text) {
+            let newMessage = {
+                key: chat.length,
+                message: text,
+                tag: "send",
+                time: "12:10", //dummy
+            };
+            let newChat = [...chat, newMessage];
+            setChat(newChat);
+            setTextMessage("");
+        }
     };
 
     return (
