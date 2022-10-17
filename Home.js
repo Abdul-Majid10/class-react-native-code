@@ -35,6 +35,12 @@ export default function Home(props) {
                         props.navigation.navigate("Chats", { name: "Abdul Majid" });
                     }}
                 />
+                <Button
+                    title="Go to Voice Chat Screens"
+                    onPress={() => {
+                        props.navigation.navigate("VoiceChats", { name: "Abdul Majid" });
+                    }}
+                />
             </View>
         </View>
     );

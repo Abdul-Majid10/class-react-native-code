@@ -6,6 +6,8 @@ import Home from "./Home";
 import CampusFinder from "./Screens/CampusFinder";
 import SettingScreen from "./Screens/SettingScreen";
 import Chats from "./Screens/Chats";
+import VoiceChat from "./Screens/VoiceChat";
+import VoiceChats from "./Screens/VoiceChats";
 import SMSChat from "./Screens/SMSChat";
 
 const Stack = createNativeStackNavigator();
@@ -32,6 +34,14 @@ function App(props) {
                     name="SMSChat"
                     component={SMSChat}
                     options={{ title: "SMS Chat" }}></Stack.Screen>
+                <Stack.Screen
+                    name="VoiceChats"
+                    component={VoiceChats}
+                    options={{ title: "Voice Chats" }}></Stack.Screen>
+                <Stack.Screen
+                    name="VoiceChat"
+                    component={VoiceChat}
+                    options={{ title: "Voice Chat" }}></Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
     );
