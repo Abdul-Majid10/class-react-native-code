@@ -65,7 +65,9 @@ function VoiceChat(props) {
 
     function getRecordingLines({ item }) {
         return (
-            <View key={item._key} style={[styles.row, styles.messageBubble, styles.sended]}>
+            <View
+                key={item._listenerCount}
+                style={[styles.row, styles.messageBubble, styles.sended]}>
                 <TouchableOpacity
                     style={{ flex: "start" }}
                     onPress={() => item.sound.replayAsync()}
