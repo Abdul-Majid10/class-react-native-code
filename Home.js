@@ -8,6 +8,7 @@ export default function Home(props) {
     useEffect(() => {
         global.setting = {
             themeColor: "#E74C3C",
+            font: 10,
             mode: "Default",
         };
     });

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 export default function SettingScreen(props) {
     const [selectedColor, setSelectedColor] = useState(global.setting.themeColor);
+    const [selectedFont, setSelectedFont] = useState(global.setting.font);
     const [selectedMode, setSelectedMode] = useState(global.setting.mode);
 
     return (
@@ -11,7 +12,7 @@ export default function SettingScreen(props) {
             <View style={styles.top}>
                 <Text style={styles.h1}>Setting</Text>
             </View>
-            <View style={styles.middle}>
+            <ScrollView style={styles.middle}>
                 <Text style={styles.h3(selectedColor)}>Color</Text>
                 <Picker
                     selectedValue={selectedColor}
@@ -22,6 +23,16 @@ export default function SettingScreen(props) {
                     <Picker.Item label="grey" value="grey" />
                     <Picker.Item label="SkyBlue" value="#5DADE2" />
                 </Picker>
+                <Text style={styles.h2(selectedFont)}>Font Size</Text>
+                <Picker
+                    selectedValue={selectedFont}
+                    onValueChange={(itemValue, itemIndex) => setSelectedFont(itemValue)}>
+                    <Picker.Item label="10" value={10} />
+                    <Picker.Item label="20" value={20} />
+                    <Picker.Item label="30" value={30} />
+                    <Picker.Item label="40" value={40} />
+                    <Picker.Item label="50" value={50} />
+                </Picker>
 
                 <Text style={styles.h3_nonColored}>Mode ( {selectedMode})</Text>
                 <Picker
@@ -31,7 +42,7 @@ export default function SettingScreen(props) {
                     <Picker.Item label="Developer" value="Developer" />
                     <Picker.Item label="Production" value="Production" />
                 </Picker>
-            </View>
+            </ScrollView>
 
             <View style={styles.buttom}>
                 <TouchableOpacity
@@ -71,6 +82,13 @@ const styles = StyleSheet.create({
         color: selectedColor,
     }),
 
+    h2: (selectedFont) => ({
+        fontSize: selectedFont,
+        padding: 20,
+        fontWeight: "bold",
+        color: "#5DADE2",
+    }),
+
     h3_nonColored: {
         fontSize: 30,
         padding: 20,
@@ -80,6 +98,7 @@ const styles = StyleSheet.create({
 
     middle: {
         flex: 0.65,
+        overflow: "hidden",
     },
     buttom: {
         flex: 0.2,
