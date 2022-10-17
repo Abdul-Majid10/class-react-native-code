@@ -8,6 +8,7 @@ export default function Home(props) {
     useEffect(() => {
         global.setting = {
             themeColor: "#E74C3C",
+            font: 10,
             mode: "Default",
         };
     });
@@ -32,6 +33,12 @@ export default function Home(props) {
                     title="Go to Chat Screens"
                     onPress={() => {
                         props.navigation.navigate("Chats", { name: "Abdul Majid" });
+                    }}
+                />
+                <Button
+                    title="Go to Voice Chat Screens"
+                    onPress={() => {
+                        props.navigation.navigate("VoiceChats", { name: "Abdul Majid" });
                     }}
                 />
             </View>
