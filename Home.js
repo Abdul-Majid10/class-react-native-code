@@ -24,21 +24,9 @@ export default function Home(props) {
                     onPress={() => props.navigation.navigate("SignUp", { name: "Abdul Majid" })}
                 />
                 <Button
-                    title="Go to Campus Finder Screen"
+                    title="Product Screen"
                     onPress={() => {
-                        props.navigation.navigate("CampusFinder", { name: "Abdul Majid" });
-                    }}
-                />
-                <Button
-                    title="Go to Chat Screens"
-                    onPress={() => {
-                        props.navigation.navigate("Chats", { name: "Abdul Majid" });
-                    }}
-                />
-                <Button
-                    title="Go to Voice Chat Screens"
-                    onPress={() => {
-                        props.navigation.navigate("VoiceChats", { name: "Abdul Majid" });
+                        props.navigation.navigate("CampusFinder");
                     }}
                 />
             </View>
