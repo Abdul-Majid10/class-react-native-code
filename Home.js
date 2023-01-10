@@ -21,25 +21,11 @@ export default function Home(props) {
             <View style={styles.middel}>
                 <Button
                     title="Go to SignUp Screen"
-                    onPress={() => props.navigation.navigate("SignUp", { name: "Abdul Majid" })}
+                    onPress={() => props.navigation.navigate("SignUp")}
                 />
                 <Button
-                    title="Go to Campus Finder Screen"
-                    onPress={() => {
-                        props.navigation.navigate("CampusFinder", { name: "Abdul Majid" });
-                    }}
-                />
-                <Button
-                    title="Go to Chat Screens"
-                    onPress={() => {
-                        props.navigation.navigate("Chats", { name: "Abdul Majid" });
-                    }}
-                />
-                <Button
-                    title="Go to Voice Chat Screens"
-                    onPress={() => {
-                        props.navigation.navigate("VoiceChats", { name: "Abdul Majid" });
-                    }}
+                    title="Go to Login Screen"
+                    onPress={() => props.navigation.navigate("Login")}
                 />
             </View>
         </View>

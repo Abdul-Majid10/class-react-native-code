@@ -1,25 +1,21 @@
 import { useState } from "react";
-import fireApp from "../env/Config.js";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity } from "react-native";
 
-export default function SignUp(props) {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+export default function Login(props) {
     const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
-
-    const auth = getAuth(fireApp);
-    const SignUpUser = () => {
+    const auth = getAuth();
+    const loginUser = () => {
         if (requiredFielsValidation()) {
-            createUserWithEmailAndPassword(auth, email, password)
+            signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    props.navigation.navigate("Home2");
+                    console.log("login suc");
+                    const user = userCredential.user;
                 })
-                .catch((err) => {
-                    alert(err.message);
+                .catch((error) => {
+                    const errorMessage = error.message;
+                    alert(errorMessage);
                 });
         }
     };
@@ -38,33 +34,14 @@ export default function SignUp(props) {
     return (
         <View style={styles.container}>
             <View style={styles.top}>
-                <Text style={styles.h1}>Sign up</Text>
+                <Text style={styles.h1}>Login</Text>
             </View>
             <View style={styles.middle}>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={setFirstName}
-                    value={firstName}
-                    placeholder="First Name"
-                />
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={setLastName}
-                    value={lastName}
-                    placeholder="Last Name"
-                />
                 <TextInput
                     style={styles.textInput}
                     onChangeText={setEmail}
                     value={email}
                     placeholder="Email"
-                />
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={setPhoneNumber}
-                    value={phoneNumber}
-                    placeholder="Phone No"
-                    keyboardType="numeric"
                 />
                 <TextInput
                     secureTextEntry={true}
@@ -76,20 +53,15 @@ export default function SignUp(props) {
             </View>
             <View style={styles.buttom}>
                 <Text style={styles.h3}>Sign up with social Account</Text>
-                <View style={styles.buttomSocial}>
-                    <Image style={styles.image} source={require("../images/fb.png")} />
-                    <Image style={styles.image} source={require("../images/google.jpeg")} />
-                    <Image style={styles.image} source={require("../images/linkedin.jpeg")} />
-                </View>
                 <View style={styles.buttom}>
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => {
-                            SignUpUser();
+                            loginUser();
                         }}>
-                        <Text style={styles.buttonText}>Sign up</Text>
+                        <Text style={styles.buttonText}>Login</Text>
                     </TouchableOpacity>
-                    <Text style={styles.h2}>Read User License Agrement</Text>
+                    <Text style={styles.h2}>Forgot Password</Text>
                 </View>
             </View>
         </View>
@@ -151,17 +123,6 @@ const styles = StyleSheet.create({
         marginTop: 30,
         fontSize: 15,
         color: "#3498DB",
-    },
-    buttomSocial: {
-        marginTop: 20,
-        flexDirection: "row",
-    },
-    image: {
-        height: 30,
-        width: 30,
-        borderRadius: 50,
-        padding: 20,
-        margin: 8,
     },
     button: {
         backgroundColor: "green",
