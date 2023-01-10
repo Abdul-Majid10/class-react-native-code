@@ -1,29 +1,77 @@
 import React from "react";
 import { Text, View, FlatList, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
-import { getDatabase,query,get, child,ref,limitToFirst, remove, onValue} from "firebase/database";
+import {
+    getDatabase,
+    query,
+    get,
+    startAfter,
+    limit,
+    child,
+    ref,
+    limitToFirst,
+    remove,
+    onValue,
+} from "firebase/database";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 function RealTimeDBData(props) {
-
     const db = getDatabase();
-    const dbRef = query(ref(db,`QuranAyahs/`),limitToFirst(5));
-    
+    const dbRef = query(ref(db, `QuranAyahs/`), limitToFirst(5));
 
     const [setting, setSetting] = useState(global.setting);
     const [ayah, setAyah] = useState([]);
-    
+
+    const storeData = async (value, update = false) => {
+        if (update) {
+            let pre = [...ayah];
+
+            Array.prototype.push.apply(pre, value);
+            try {
+                await AsyncStorage.setItem("AyahsData", JSON.stringify(pre));
+                getData();
+            } catch (e) {
+                console.log("Error data saving in local storage");
+            }
+        } else {
+            try {
+                await AsyncStorage.setItem("AyahsData", JSON.stringify(value));
+                getData();
+            } catch (e) {
+                console.log("Error data saving in local storage");
+            }
+        }
+    };
+
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem("AyahsData");
+            console.log("data is get from local");
+            jsonValue != null ? setAyah(JSON.parse(jsonValue)) : null;
+        } catch (e) {
+            console.log("Error getting on local");
+        }
+    };
 
     const renderAyah = ({ item }) => (
         <>
             <View style={styles.ayahSection}>
                 <View style={[styles.AyahTopHeader, styles.subSec]}>
-                    <AntDesign style={[styles.sound, styles.flexauto]} name="sound" size={30} color="#5DADE2" />
-                    <Text style={[styles.ayahTopNumber,styles.flexauto]}> آیت {item.Id}</Text>
-                    <Feather style={[styles.menu, styles.flexauto]} name="menu" size={30} color="#5DADE2" />
+                    <AntDesign
+                        style={[styles.sound, styles.flexauto]}
+                        name="sound"
+                        size={30}
+                        color="#5DADE2"
+                    />
+                    <Text style={[styles.ayahTopNumber, styles.flexauto]}> آیت {item.Id}</Text>
+                    <Feather
+                        style={[styles.menu, styles.flexauto]}
+                        name="menu"
+                        size={30}
+                        color="#5DADE2"
+                    />
                 </View>
                 <View style={[styles.AyahArbi, styles.subSec]}>
                     <Text style={styles.AyahArbiText}> بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</Text>
@@ -47,20 +95,33 @@ function RealTimeDBData(props) {
 
     useEffect(() => {
         get(dbRef)
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-              console.log(snapshot.val());
-              setAyah(snapshot.val());
-            } else {
-              console.log("No data available");
-            }
-          }).catch((error) => {
-            console.error(error);
-          });
-    
-      
-    }, [])
-    
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    storeData(snapshot.val());
+                } else {
+                    console.log("No data available");
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
+    function getNewData() {
+        console.log(ayah.length);
+        const newDbRef = query(ref(db, `QuranAyahs/`), limitToFirst(5));
+        get(newDbRef)
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    storeData(snapshot.val(), true);
+                } else {
+                    console.log("No data available");
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
     return (
         <View style={styles.container}>
@@ -68,7 +129,12 @@ function RealTimeDBData(props) {
                 <Text style={styles.h1}>الفاتحة</Text>
             </View>
             <View style={styles.ayahContainer}>
-                <FlatList data={ayah} renderItem={renderAyah} keyExtractor={(item) => item.key} />
+                <FlatList
+                    data={ayah}
+                    renderItem={renderAyah}
+                    onEndReached={getNewData}
+                    keyExtractor={(item) => item.id}
+                />
             </View>
         </View>
     );
@@ -83,52 +149,51 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    ayahContainer: { 
+    ayahContainer: {
         flex: 0.8,
-     },
+    },
     ayahSection: {
         padding: 12,
         flex: 1,
         alignItems: "center",
-        // backgroundColor:'red'
     },
 
-    AyahTopHeader:{
+    AyahTopHeader: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
 
-    flexauto:{
+    flexauto: {
         flexGrow: 1,
         flexnk: 1,
         flexBasis: "auto",
     },
 
-    sound:{
-        paddingLeft: 10
+    sound: {
+        paddingLeft: 10,
     },
 
-    ayahTopNumber:{
+    ayahTopNumber: {
         paddingHorizontal: 130,
         opacity: 0.5,
-        fontSize: 15
+        fontSize: 15,
     },
 
-    menu:{
+    menu: {
         textAlign: "flex-end",
     },
 
-    subSec:{
-        margin: 8
+    subSec: {
+        margin: 8,
     },
 
     AyahDetail: {
-         flex: 1,
-         flexDirection : "row" 
-        },
+        flex: 1,
+        flexDirection: "row",
+    },
     AyahNumber: {
-        paddingHorizontal: 20, 
+        paddingHorizontal: 20,
     },
     ayahRightSection: {
         flex: 0.1,
@@ -137,17 +202,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         flex: 0.68,
     },
-    name: {
-        fontSize: 20,
-        fontWeight: "bold",
-        marginBottom: 5,
-    },
-    AyahArbiText:{
+    AyahArbiText: {
         fontSize: 21,
         fontWeight: "bold",
     },
-    AyahTranslationText:{
-        fontSize: 15,
+    AyahTranslationText: {
+        fontSize: 16,
     },
 
     h1: {
@@ -155,10 +215,13 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#5DADE2",
     },
-    AyahFooterText:{
+    AyahFooterText: {
         fontSize: 21,
         fontWeight: "bold",
         color: "#5DADE2",
+    },
+    center: {
+        alignItems: "center",
     },
     separator: (setting) => ({
         borderBottomColor: "grey",
