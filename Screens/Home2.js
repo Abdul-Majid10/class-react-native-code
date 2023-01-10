@@ -53,6 +53,12 @@ export default function Home2(props) {
                         props.navigation.navigate("VoiceChats");
                     }}
                 />
+                <Button
+                    title="Go to RTDB data"
+                    onPress={() => {
+                        props.navigation.navigate("RealTimeDBData");
+                    }}
+                />
             </View>
             <View style={styles.buttom}>
                 <View style={styles.buttom}>

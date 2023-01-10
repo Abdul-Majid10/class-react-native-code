@@ -12,6 +12,7 @@ import Chats from "./Screens/Chats";
 import VoiceChat from "./Screens/VoiceChat";
 import VoiceChats from "./Screens/VoiceChats";
 import SMSChat from "./Screens/SMSChat";
+import RealTimeDBData from "./Screens/RealTimeDBData";
 import Home2 from "./Screens/Home2";
 import { getAuth } from "firebase/auth";
 import { Splash } from "./Screens/Splash";
@@ -61,9 +62,9 @@ const LogedInUserStack = () => {
                 component={VoiceChats}
                 options={{ title: "Voice Chats" }}></HomeStack.Screen>
             <HomeStack.Screen
-                name="VoiceChat"
-                component={VoiceChat}
-                options={{ title: "Voice Chat" }}></HomeStack.Screen>
+                name="RealTimeDBData"
+                component={RealTimeDBData}
+                options={{ title: "RealTimeDBData" }}></HomeStack.Screen>
         </HomeStack.Navigator>
     );
 };
